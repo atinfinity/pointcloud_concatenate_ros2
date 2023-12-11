@@ -70,3 +70,9 @@ The package uses the following topics, which should be remapped to suit your imp
   The input pointclouds should be publishing faster or at an equal rate to this frequency.  
   If an input pointclouds is not received anew before a new update cycle, the previous value will be used.  
   Default value: `10.0`.
+
+### **Demo**
+
+<img src="./config/img/demo.gif" width="60%" height="60%">
+
+The blue and red pointclouds are from two difference topic sources, and the yellow one is the concated output.
