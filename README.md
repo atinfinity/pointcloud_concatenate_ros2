@@ -5,7 +5,7 @@
 This package provides a node which can be used for concatenating several pointclouds into one.
 
 Up to 4 pointclouds can be concatenated at once.
-If you need more pointclouds to be concatenated, then you can probably chain the output of this node into a second `pointcloud_concatenate` node.
+If you need more pointclouds to be concatenated, then you can probably chain the output of this node into a second `pointcloud_concat_node` node.
 
 ### **Dependencies**
 
@@ -34,7 +34,7 @@ And example launch file is provided.
 * `concat.launch`  
   A sample launch file which highlights the necessary parameters and topics.  
   Launches a node which subscribes to 3 pointclouds, concatenates them and publishes the
-  concatenated pointcloud in frame `base_link` at a frequency of 10 Hz.
+  concatenated pointcloud in frame `map` at a frequency of 10 Hz.
 
 ### **ROS topics**
 
@@ -42,18 +42,18 @@ The package uses the following topics, which should be remapped to suit your imp
 
 #### Publishers
 
-* `cloud_out` - [`sensor_msgs/PointCloud2`]  
+* `cloud_out` - [`sensor_msgs/msg/PointCloud2`]  
   The concatenated pointcloud.
 
 #### Subscribers
 
-* `cloud_in1` - [`sensor_msgs/PointCloud2`]  
+* `cloud_in1` - [`sensor_msgs/msg/PointCloud2`]  
   The first pointcloud to add to the output.
-* `cloud_in2` - [`sensor_msgs/PointCloud2`]  
+* `cloud_in2` - [`sensor_msgs/msg/PointCloud2`]  
   The second pointcloud to add to the output.
-* `cloud_in3` - [`sensor_msgs/PointCloud2`]  
+* `cloud_in3` - [`sensor_msgs/msg/PointCloud2`]  
   The third pointcloud to add to the output.
-* `cloud_in4` - [`sensor_msgs/PointCloud2`]  
+* `cloud_in4` - [`sensor_msgs/msg/PointCloud2`]  
   The fourth pointcloud to add to the output.
 
 ### **ROS parameters**
@@ -64,7 +64,7 @@ The package uses the following topics, which should be remapped to suit your imp
 * `target_frame` - [a valid frame_id]  
   Sets the frame_id which the pointclouds will be collected in before concatenation.  
   `cloud_out` will be in this frame.  
-  Default value: `base_link`.
+  Default value: `map`.
 * `hz` - [double]  
   Sets the frequency at which the output is updated and published.  
   The input pointclouds should be publishing faster or at an equal rate to this frequency.  

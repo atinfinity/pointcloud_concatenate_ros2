@@ -1,26 +1,38 @@
 <?xml version="1.0"?>
-<package format="2">
-  <name>pointcloud_concatenate</name>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>pointcloud_concatenate_ros2</name>
   <version>0.0.0</version>
-  <description>
-    A node which can be used to concatenate up to 4 pointclouds and output the 
-    concatenated pointcloud on a single topic.
-  </description>
-
-  <maintainer email="albertsseligmann@gmail.com">Albert Seligmann</maintainer>
-
+  <description>Concat multiple pointcloud with different frame_ids in ros2</description>
+  <maintainer email="lightinfected@hotmail.com">Wang Z.Y.</maintainer>
+  <author>Wang Z.Y.</author>
   <license>BSD</license>
 
-  <!-- buildtool_depend: dependencies of the build process -->
-  <buildtool_depend>catkin</buildtool_depend>
-  <!-- build_depend: dependencies only used in source files -->
-  <build_depend>boost</build_depend>
-  <!-- depend: build, export, and execution dependency -->
-  <depend>roscpp</depend>
-  <depend>pcl_ros</depend>
-  <depend>tf2</depend>
-  <depend>tf2_ros</depend>
-  <depend>sensor_msgs</depend>
-  <depend>rviz</depend>
+  <url type="website">https://github.com/lightinfection/pointcloud_concatenate_ros2</url>
 
+    <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+    <depend>rclcpp</depend>
+    <depend>rclcpp_components</depend>
+    <depend>pcl_ros</depend>
+    <depend>pcl_conversions</depend>
+    <depend>tf2</depend>
+    <depend>tf2_ros</depend>
+    <depend>sensor_msgs</depend>
+
+    <exec_depend>launch</exec_depend>
+    <exec_depend>launch_ros</exec_depend>
+
+    <test_depend>ament_lint_auto</test_depend>
+    <test_depend>ament_cmake_cppcheck</test_depend>
+    <test_depend>ament_cmake_cpplint</test_depend>
+    <test_depend>ament_cmake_flake8</test_depend>
+    <test_depend>ament_cmake_lint_cmake</test_depend>
+    <test_depend>ament_cmake_pep257</test_depend>
+    <test_depend>ament_cmake_uncrustify</test_depend>
+    <test_depend>ament_cmake_xmllint</test_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
 </package>
