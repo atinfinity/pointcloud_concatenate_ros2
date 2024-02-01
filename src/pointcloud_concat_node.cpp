@@ -18,7 +18,7 @@ PointCloudConcatNode::PointCloudConcatNode(const rclcpp::NodeOptions & options)
   sub_cloud_in4 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in4", sensor_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn4, this, _1));
   pub_cloud_out = this->create_publisher<sensor_msgs::msg::PointCloud2>("cloud_out", sensor_qos);
 
-  timer_ = this->create_wall_timer(std::chrono::microseconds((int)(1000/(this->param_hz_))), std::bind(&PointCloudConcatNode::update, this));
+  timer_ = this->create_wall_timer(std::chrono::milliseconds((int)(1000/(this->param_hz_))), std::bind(&PointCloudConcatNode::update, this));
 }
 
 PointCloudConcatNode::~PointCloudConcatNode()
