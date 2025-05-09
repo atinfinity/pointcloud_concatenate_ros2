@@ -35,7 +35,7 @@ private:
   std::string param_frame_target_;
   int param_clouds_, queue_size_;
   double param_hz_;
-  rclcpp::SensorDataQoS sensor_qos;
+  rclcpp::QoS reliable_qos;
 
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_cloud_in1, sub_cloud_in2, sub_cloud_in3, sub_cloud_in4;
   rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_cloud_out;

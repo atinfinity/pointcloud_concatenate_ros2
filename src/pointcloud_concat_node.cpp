@@ -4,19 +4,18 @@ namespace pointcloud_concatenate
 {
 
 PointCloudConcatNode::PointCloudConcatNode(const rclcpp::NodeOptions & options)
-: rclcpp::Node("pointcloud_concatenate", options) 
+: rclcpp::Node("pointcloud_concatenate", options), reliable_qos(rclcpp::QoS(10).reliable())
 {
   using std::placeholders::_1;
   handleParams();
   tfBuffer = std::make_unique<tf2_ros::Buffer>(this->get_clock());
   tfListener.reset(new tf2_ros::TransformListener(*tfBuffer));
-  
-  sensor_qos.keep_last(10);
-  sub_cloud_in1 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in1", sensor_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn1, this, _1));
-  sub_cloud_in2 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in2", sensor_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn2, this, _1));
-  sub_cloud_in3 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in3", sensor_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn3, this, _1));
-  sub_cloud_in4 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in4", sensor_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn4, this, _1));
-  pub_cloud_out = this->create_publisher<sensor_msgs::msg::PointCloud2>("cloud_out", sensor_qos);
+
+  sub_cloud_in1 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in1", reliable_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn1, this, _1));
+  sub_cloud_in2 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in2", reliable_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn2, this, _1));
+  sub_cloud_in3 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in3", reliable_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn3, this, _1));
+  sub_cloud_in4 = this->create_subscription<sensor_msgs::msg::PointCloud2>("cloud_in4", reliable_qos, std::bind(&PointCloudConcatNode::subCallbackCloudIn4, this, _1));
+  pub_cloud_out = this->create_publisher<sensor_msgs::msg::PointCloud2>("cloud_out", reliable_qos);
 
   timer_ = this->create_wall_timer(std::chrono::milliseconds((int)(1000/(this->param_hz_))), std::bind(&PointCloudConcatNode::update, this));
 }
@@ -26,35 +25,35 @@ PointCloudConcatNode::~PointCloudConcatNode()
   RCLCPP_INFO(this->get_logger(), "Destructing PointcloudConcatenate...");
 }
 
-void PointCloudConcatNode::subCallbackCloudIn1(sensor_msgs::msg::PointCloud2 msg) 
+void PointCloudConcatNode::subCallbackCloudIn1(sensor_msgs::msg::PointCloud2 msg)
 {
   cloud_in1 = msg;
   cloud_in1_received = true;
   cloud_in1_received_recent = true;
 }
 
-void PointCloudConcatNode::subCallbackCloudIn2(sensor_msgs::msg::PointCloud2 msg) 
+void PointCloudConcatNode::subCallbackCloudIn2(sensor_msgs::msg::PointCloud2 msg)
 {
   cloud_in2 = msg;
   cloud_in2_received = true;
   cloud_in2_received_recent = true;
 }
 
-void PointCloudConcatNode::subCallbackCloudIn3(sensor_msgs::msg::PointCloud2 msg) 
+void PointCloudConcatNode::subCallbackCloudIn3(sensor_msgs::msg::PointCloud2 msg)
 {
   cloud_in3 = msg;
   cloud_in3_received = true;
   cloud_in3_received_recent = true;
 }
 
-void PointCloudConcatNode::subCallbackCloudIn4(sensor_msgs::msg::PointCloud2 msg) 
+void PointCloudConcatNode::subCallbackCloudIn4(sensor_msgs::msg::PointCloud2 msg)
 {
   cloud_in4 = msg;
   cloud_in4_received = true;
   cloud_in4_received_recent = true;
 }
 
-void PointCloudConcatNode::handleParams() 
+void PointCloudConcatNode::handleParams()
 {
   RCLCPP_INFO(this->get_logger(), "Loading parameters...");
   std::string param_name;
@@ -75,7 +74,7 @@ void PointCloudConcatNode::handleParams()
   if (!param_clouds_) {
       param_clouds_ = 2;
       ROSPARAM_WARN(param_name, param_clouds_);
-  } 
+  }
   else if(param_clouds_>4){
       param_clouds_ = 2;
       RCLCPP_WARN(this->get_logger(), "Max only 4 inputs are supported yet. Already reset to 2.");
@@ -96,7 +95,7 @@ void PointCloudConcatNode::handleParams()
 void PointCloudConcatNode::update() {
   if (pub_cloud_out->get_subscription_count() > 0 && param_clouds_ >= 1) {
     sensor_msgs::msg::PointCloud2 cloud_to_concat;
-    cloud_out = cloud_to_concat; 
+    cloud_out = cloud_to_concat;
     bool success = true;
 
     if ((!cloud_in1_received) && (!cloud_in2_received) && (!cloud_in3_received) && (!cloud_in4_received)) {
@@ -126,7 +125,7 @@ void PointCloudConcatNode::update() {
       if (!success) {
         RCLCPP_WARN_SKIPFIRST(this->get_logger(),"Transforming cloud 2 from %s to %s failed!", cloud_in2.header.frame_id.c_str(), param_frame_target_.c_str());
       }
-      
+
       if (success) {
         pcl::concatenatePointCloud(cloud_out, cloud_to_concat, cloud_out);
       }
@@ -169,7 +168,7 @@ void PointCloudConcatNode::update() {
   }
 }
 
-void PointCloudConcatNode::publishPointcloud(sensor_msgs::msg::PointCloud2 cloud) 
+void PointCloudConcatNode::publishPointcloud(sensor_msgs::msg::PointCloud2 cloud)
 {
     cloud.header.stamp = rclcpp::Clock().now();
     pub_cloud_out->publish(cloud);
