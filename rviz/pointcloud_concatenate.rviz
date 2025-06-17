@@ -78,7 +78,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
-        Value: /ti_radar_0/ti_mmwave_0
+        Value: /cloud1
       Use Fixed Frame: true
       Use rainbow: false
       Value: true
@@ -112,7 +112,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
-        Value: /ti_radar_1/ti_mmwave_1
+        Value: /cloud2
       Use Fixed Frame: true
       Use rainbow: false
       Value: true
