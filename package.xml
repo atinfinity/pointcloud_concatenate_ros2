@@ -4,7 +4,7 @@
   <name>pointcloud_concatenate_ros2</name>
   <version>0.0.0</version>
   <description>Concat multiple pointcloud with different frame_ids in ros2</description>
-  <maintainer email="lightinfected@hotmail.com">Wang Z.Y.</maintainer>
+  <maintainer email="dandelion1124@gmail.com">atinfinity</maintainer>
   <author>Wang Z.Y.</author>
   <license>BSD</license>
 

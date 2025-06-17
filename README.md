@@ -16,12 +16,17 @@ This package depends on the following libraries
 
 ### **Installation**
 
-To use simply clone the package into your workspace and integrate the node into your launch file.
-
+To use simply clone the package into your workspace and integrate the node into your launch file.  
 Make sure the dependencies are installed by running rosdep.
 
 ```bash
+mkdir -p ~/dev_ws/src
+cd ~/dev_ws/src
+git clone https://github.com/atinfinity/pointcloud_concatenate_ros2.git
+cd ..
 rosdep install --from-paths src --ignore-src -r -y
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+source ~/dev_ws/install/setup.bash
 ```
 
 ---
@@ -31,7 +36,7 @@ rosdep install --from-paths src --ignore-src -r -y
 This node is intended to be included as a part of a larger launch file.
 And example launch file is provided.
 
-* `concat.launch`  
+* `concat.launch.py`
   A sample launch file which highlights the necessary parameters and topics.  
   Launches a node which subscribes to 3 pointclouds, concatenates them and publishes the
   concatenated pointcloud in frame `map` at a frequency of 10 Hz.
