@@ -78,6 +78,6 @@ The package uses the following topics, which should be remapped to suit your imp
 
 ### **Demo**
 
-<img src="./config/img/demo.gif" width="60%" height="60%">
+<img src="./img/demo.gif" width="60%" height="60%">
 
 The blue and red pointclouds are from two difference topic sources, and the yellow one is the concated output.
