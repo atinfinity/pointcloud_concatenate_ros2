@@ -41,9 +41,9 @@ def generate_launch_description():
         package='pointcloud_concatenate_ros2',
         executable='pointcloud_concat_node',
         parameters=[{
-            '/target_frame': 'map',
-            '/clouds': 2,
-            '/hz': 10.0,
+            'target_frame': 'map',
+            'clouds': 2,
+            'hz': 10.0,
             'use_sim_time': use_sim_time
         }],
         remappings=[('cloud_in1', '/cloud1'),
