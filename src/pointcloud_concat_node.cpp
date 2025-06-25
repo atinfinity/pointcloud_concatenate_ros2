@@ -59,7 +59,7 @@ void PointCloudConcatNode::handleParams()
   std::string param_name;
 
   std::string parse_str;
-  param_name = "/target_frame";
+  param_name = "target_frame";
   declare_parameter(param_name, parse_str);
   parse_str = get_parameter(param_name).as_string().c_str();
   if (!(parse_str.length() > 0)) {
@@ -68,7 +68,7 @@ void PointCloudConcatNode::handleParams()
   }
   param_frame_target_ = parse_str;
 
-  param_name = "/clouds";
+  param_name = "clouds";
   declare_parameter(param_name, param_clouds_);
   param_clouds_ = get_parameter(param_name).as_int();
   if (!param_clouds_) {
@@ -81,7 +81,7 @@ void PointCloudConcatNode::handleParams()
   }
 
   // Frequency to update/publish
-  param_name = "/hz";
+  param_name = "hz";
   declare_parameter(param_name, param_hz_);
   param_hz_ = get_parameter(param_name).as_double();
   if (!param_hz_) {
