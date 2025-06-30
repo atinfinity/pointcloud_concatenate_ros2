@@ -22,7 +22,7 @@ Make sure the dependencies are installed by running rosdep.
 ```bash
 mkdir -p ~/dev_ws/src
 cd ~/dev_ws/src
-git clone https://github.com/atinfinity/pointcloud_concatenate_ros2.git
+git clone https://github.com/atinfinity/pointcloud_concatenate_ros2.git -b jazzy
 cd ..
 rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
